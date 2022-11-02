@@ -1,8 +1,42 @@
+import axios from 'axios';
 import React from 'react';
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./Register.css";
 
 export default function Register() {
-  return (
+    const username = useRef(); 
+    const email = useRef();
+    const password = useRef();
+    const passwordConfirmation = useRef();
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // パスワードと確認用のパスワードが合うように
+        if(password.current.value !== passwordConfirmation.current.value){
+            passwordConfirmation.current.setCustomValidity("Incorrect Password")
+        } else {
+            try {
+                const user = {
+                    username: username.current.value,
+                    email: email.current.value,
+                    password: password.current.value,
+                };
+                // console.log(user);
+                // registerAPIを叩く
+                await axios.post("/auth/register", user);
+                navigate("/login");
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+    };
+
+    return (
     <div className='login'>
         <div className="loginWrapper">
             <div className="loginLeft">
@@ -10,15 +44,15 @@ export default function Register() {
                 <span className='loginDesc'>本格的なSNSを、自分の手で。</span>
             </div>
             <div className="loginRight">
-                <div className="loginBox">
-                    <p className="loginMSG">アカウント作成</p>
-                    <input type="text" className="loginInput" placeholder='User Name '/>
-                    <input type="text" className="loginInput" placeholder='Email '/>
-                    <input type="text" className="loginInput" placeholder='Password '/>
-                    <input type="text" className="loginInput" placeholder='Comfirm Password '/>
-                    <button className="loginButton">新規登録</button>
-                    <button className="loginRegisterButton">ログイン</button>
-                </div>
+                <form className="loginBox" onSubmit={(e) => handleSubmit(e)}>
+                    <p className="loginMSG">Register</p>
+                    <input type="text" className="loginInput" placeholder='User Name' required ref={username}/>
+                    <input type="email" className="loginInput" placeholder='Email' required ref={email}/>
+                    <input type="password" className="loginInput" placeholder='Password' required minLength="6" ref={password}/>
+                    <input type="password" className="loginInput" placeholder='Confirm Password' required minLength="6" ref={passwordConfirmation}/>
+                    <button className="loginButton" type="submit">Sign Up</button>
+                    <button className="loginRegisterButton">Login</button>
+                </form>
             </div>
         </div>
     </div>

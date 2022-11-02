@@ -6,11 +6,13 @@ import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 
 export default function Share() {
+  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className='share'>
       <div className="shareWrapper">
         <div className="shareTop">
-            <img src="/assets/person/IMG_5976.png" alt="" className='shareProfileIMG' />
+            <img src={PUBLIC_FOLDER + "/person/noface.jpeg"}
+            className='shareProfileIMG' />
             <input t
             ype="text" 
             className="shareInput" 

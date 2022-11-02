@@ -2,8 +2,9 @@ import React, { useEffect, useState }from 'react';
 import "./Post.css";
 // import { Users } from "../../dummyData";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import axios from "axios";
+import axios from "axios"; 
 import { format } from 'timeago.js';
+import { Link } from 'react-router-dom';
 
 
 export default function Post({ post }) {
@@ -15,12 +16,12 @@ export default function Post({ post }) {
     
     useEffect(() => {
         const fetchUser = async () => {
-            const response = await axios.get(`/users/${post.userId}`);
-            console.log(response.data);
+            const response = await axios.get(`/users?userId=${post.userId}`);
+            // console.log(response.data);
             setUser(response.data);
         };
         fetchUser();
-    }, []);
+    }, [post.userId]);
   
 
     const handleLike = () => {
@@ -33,11 +34,13 @@ export default function Post({ post }) {
       <div className="postWrapper">
         <div className="postTop">
             <div className="postTopLeft">
+                <Link to={`/profile/${user.username}`} >
                 <img 
                 src={user.profilePicture || PUBLIC_FOLDER + "/person/noface.jpeg"}
                 alt="" 
                 className='postProfileIMG' 
                 />
+                </Link>
                 <span className="postUsername">
                     {user.username}
                 </span>
