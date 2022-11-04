@@ -3,6 +3,7 @@ const app = express();
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
+const uploadRoute = require("./routes/upload");
 const PORT = 5000; 
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
+app.use("/api/upload", uploadRoute);
 
 app.get("/", (req, res) => {
     res.send("Hello express!");

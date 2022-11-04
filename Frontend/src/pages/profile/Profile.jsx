@@ -38,7 +38,7 @@ export default function Profile() {
                 alt="" 
                 className='profileCoverIMG' />
                 <img 
-                src={user.profilePicture || PUBLIC_FOLDER + "/person/noface.jpeg"}
+                src={PUBLIC_FOLDER + user.profilePicture || PUBLIC_FOLDER + "/person/noface.jpeg"}
                 alt="" 
                 className='profileUserIMG' />
             </div>
